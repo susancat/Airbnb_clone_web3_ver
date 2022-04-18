@@ -1,4 +1,4 @@
-[
+export const rentalsList = [
     {
       attributes: {
         city: "New York",
