@@ -9,7 +9,7 @@ export const rentalsList = [
         lat: "40.716862",
         long: "-73.999005",
         name: "Apartment in China Town",
-        pricePerDay: "3",
+        pricePerDay: "0.03",
       },
     },
   ];
