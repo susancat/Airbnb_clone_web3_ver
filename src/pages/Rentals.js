@@ -57,7 +57,7 @@ const Rentals = () => {
 
     const result = await query.find();
     let cords = [];
-    result.map(e => {
+    result.forEach((e) => {
       cords.push({ lat: e.attributes.lat, lng: e.attributes.long });
     });
     setCoOrdinates(cords);
@@ -158,7 +158,7 @@ const Rentals = () => {
                   <>
                   <hr className="line2" />
                   <div className={highlight === i ? "rentalDivH" : "rentalDiv"}>
-                    <img className="rentalImg" src={e.attributes.imgUrl} />
+                    <img className="rentalImg" src={e.attributes.imgUrl} alt="bnb" />
                     <div className="rentalInfo">
                       <div className="rentalTitle">{e.attributes.name}</div>
                       <div className="rentalDesc">

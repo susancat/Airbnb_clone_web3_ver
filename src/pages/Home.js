@@ -35,8 +35,8 @@ const Home = () => {
           <div className="inputs">
             Location
             <Select 
-              defaultOptionIndex={0} 
-              onChange={(data) => setDestination(data.label)} 
+              defaultOptionIndex={0}
+              onChange={(data) => setDestination(data.label)}
               options={[
                 {
                   id: 'ny',
