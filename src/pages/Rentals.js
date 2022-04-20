@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { useState,useEffect } from 'react';
 import { useLocation } from 'react-router';
 import logo from '../images/airbnbRed.png';
-import { ConnectButton, Icon, Button } from "web3uikit";
+import { ConnectButton, Icon, Button, useNotification } from "web3uikit";
 // import {rentalsList} from '../sampleRentalsList';
 import RentalsMap from "../components/RentalsMap";
 import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
+import User from '../components/User';
 
 const Rentals = () => {
   const { state: searchFilters } = useLocation();
@@ -15,8 +16,36 @@ const Rentals = () => {
   const [rentalsList, setRentalsList] = useState();
   const [coOrdinates, setCoOrdinates] = useState([]);//lat and long
   const contractProcessor = useWeb3ExecuteFunction();
+  const dispatch = useNotification(); 
+  const { Moralis, account } = useMoralis();
 
-  const { Moralis } = useMoralis();
+  const handleSuccess = () => {
+    dispatch({
+      type: "success",
+      message: `Nice! You are going to ${searchFilters.destination}!!`,
+      title: "Booking Successful",
+      position:"topL"
+    });
+  };
+
+  const handleError = (msg) => {
+    dispatch({
+      type: "error",
+      message: `${msg}`,
+      title: "Booking Failed",
+      position:"topL"
+    });
+  };
+
+  const handleNoAccount = () => {
+    dispatch({
+      type: "error",
+      message: "You need to connect your wallet to book a rental!",
+      title: "Not Connected",
+      position:"topL"
+    });
+  };
+
 //each time search conditions changed, fetch the rental list
 //search according to city name and smaller than guests limitation
   useEffect(() => {
@@ -76,10 +105,13 @@ const Rentals = () => {
       msgValue: Moralis.Units.ETH(dayPrice * arr.length),
     }
     await contractProcessor.fetch({
-      params: options//1:13:01
-
-
-      
+      params: options,
+      onSuccess: () => {
+        handleSuccess();//get notification
+      },
+      onError: (error) => {
+        handleError(error.data.message)
+      }
     })
   }
 
@@ -110,6 +142,9 @@ const Rentals = () => {
           </div>
         </div>
         <div className="lrContainers">
+          {account && 
+            <User account={account} />
+          }
           <ConnectButton />
         </div>
       </div>
@@ -133,7 +168,19 @@ const Rentals = () => {
                         {e.attributes.dosDescription}
                       </div>
                       <div class="bottomButton">
-                        <Button text="Stay here" />
+                        <Button 
+                          onClick={() => {
+                            if(account) {
+                              bookRental(
+                                searchFilters.checkIn,
+                                searchFilters.checkOut,
+                                e.attributes.uid_decimal.value.$numberDecimal,//get id of the rental
+                                Number(e.attributes.pricePerDay_decimal.value.$numberDecimal)//make sure the price is Number
+                              )} else {
+                                handleNoAccount()
+                              }
+                          }}
+                          text="Stay here" />
                         <div class="price">
                           <Icon 
                             fill="#808080"
