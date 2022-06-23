@@ -4,20 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
-import { MoralisProvider } from "react-moralis";
-import { NotificationProvider } from 'web3uikit';
 
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <MoralisProvider appId="Ft2jqN6WLBDOexygNshcAW3Z7ZIwo58gOYkKnlFj" serverUrl="https://pfltptq2y8xs.usemoralis.com:2053/server">
-      <NotificationProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-      </NotificationProvider>
-    </MoralisProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -19,8 +19,8 @@ contract airbnb {
         string unoDescription;
         string dosDescription;
         string imgUrl;
-        uint256 maxGuests;
-        uint256 pricePerDay;
+        uint8 maxGuests;
+        uint16 pricePerDay;
         string[] datesBooked;
         uint256 id;
         address renter;
@@ -34,8 +34,8 @@ contract airbnb {
         string unoDescription,
         string dosDescription,
         string imgUrl,
-        uint256 maxGuests,
-        uint256 pricePerDay,
+        uint8 maxGuests,
+        uint16 pricePerDay,
         string[] datesBooked,
         uint256 id,
         address renter
@@ -61,8 +61,8 @@ contract airbnb {
         string memory unoDescription,
         string memory dosDescription,
         string memory imgUrl,
-        uint256 maxGuests,
-        uint256 pricePerDay,
+        uint8 maxGuests,
+        uint16 pricePerDay,
         string[] memory datesBooked
     ) public {
         require(msg.sender == owner, "Only owner of smart contract can put up rentals");

@@ -10,3 +10,9 @@ And some other features can be used for example "view user's stay"
 Frontend and web3: React, web3 UI kit
 
 Smart contract deployed by Remix; Rinkeby testnet used.
+
+updates:
+not to use Moralis anymore
+frontend: React bootstrap
+web3: web3modal and web3.js
+testnet: polygon mumbai

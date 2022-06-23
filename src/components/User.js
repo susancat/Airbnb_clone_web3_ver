@@ -1,26 +1,24 @@
 import React from "react";
-import { Icon, Modal, Card } from 'web3uikit';
+import { Icon, Modal, Card } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import{ useMoralis } from 'react-moralis';
 
 function User({account}) {
   const [visible, setVisible] = useState(false);
-  const { Moralis } = useMoralis();
   const [userRentals, setUserRentals] = useState();
 
   useEffect(() => {
-    async function fetchRentals() {
-      const rentals = Moralis.Object.extend("newBookings");//the name of data collection
-      const query = new Moralis.Query(rentals);
-      query.equalTo("booker", account);
-      const result = await query.find();
-
-      setUserRentals(result);
-    }
-
     fetchRentals()
   },[visible])
 
+  //call getRentals function from contract, search by user's account
+  async function fetchRentals() {
+    // const rentals = Moralis.Object.extend("newBookings");//the name of data collection
+    // const query = new Moralis.Query(rentals);
+    // query.equalTo("booker", account);
+    // const result = await query.find();
+
+    // setUserRentals(result);
+  }
   return (
     <>
     <div onClick={() => setVisible(true)}>
