@@ -1,6 +1,6 @@
 # Airbnb_web3_version
 
-please view it at: airbnb-clone-web3-ekcve287t-susancat.vercel.app
+please view it at: https://airbnb-clone-web3-ekcve287t-susancat.vercel.app
 
 make sure you've got some faucet token from: https://faucet.polygon.technology/
 
