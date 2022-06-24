@@ -7,6 +7,7 @@ import logo from '../images/airbnbRed.png';
 import {Button, Row, Col, InputGroup } from "react-bootstrap";
 import {rentalsList} from '../sampleRentalsList';
 import RentalsMap from "../components/RentalsMap";
+import ToastMessage from "../components/Toast";
 // import User from '../components/User';
 
 import Web3 from "web3";
@@ -22,6 +23,7 @@ const Rentals = () => {
   const [coOrdinates, setCoOrdinates] = useState([]);//lat and long
   const [account, setAccount] = useState(null);
   const [contract, setContract] = useState();
+  const [show, setShow] = useState(false);
 
   const contractAddress = '0x9c976cd69e4E914bECf7aED5618680Db090b0264';
 
@@ -40,6 +42,7 @@ useEffect(() => {
   })()
 }, [])
 
+const handleShow = () => setShow(true);
   // const handleSuccess = () => {
   //   dispatch({
   //     type: "success",
@@ -190,10 +193,15 @@ async function connect() {
       value: web3.utils.toWei((dayPrice * arr.length).toString(), 'ether'),
       from: account
     }
-    //here to provide contract address, abi, and compute price, call addDatesBooked()
-    await contract.methods.addDatesBooked(id, arr).send(options);
-
-    //if the above success(onSuccess: () => {}), call handleSuccess(), if not, call handleError(error.data.message)
+    //https://web3js.readthedocs.io/en/v1.7.4/web3-eth-contract.html#id35
+    //need to check what returns in callback function
+    await contract.methods.addDatesBooked(id, arr).send(options, function(error, transactionHash){
+      if(transactionHash) {
+        handleShow();
+      } else {
+        console.log(error)
+      }
+    });
   }
 
   return (

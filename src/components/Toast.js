@@ -4,9 +4,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Toast from 'react-bootstrap/Toast';
 
-function ToastMessage() {
-  const [show, setShow] = useState(false);
-
+function ToastMessage({show, setShow}) {
+  const handleClose = () => setShow(false);
+//should fade auto
   return (
     <Row>
       <Col xs={6}>
