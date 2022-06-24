@@ -1,6 +1,7 @@
 # Airbnb_web3_version
 
 please view it at: airbnb-clone-web3-ekcve287t-susancat.vercel.app
+
 make sure you've got some faucet token from: https://faucet.polygon.technology/
 
 # An Airbnb clone web app with web3 features:
@@ -16,10 +17,12 @@ Frontend and web3: React, web3 UI kit
 Smart contract deployed by Remix; Rinkeby testnet used.
 
 updates:
-not to use Moralis anymore
+- not to use Moralis anymore
 
-frontend: React bootstrap
+- frontend: React bootstrap
 
-web3: web3modal and web3.js
+- web3: web3modal and web3.js
 
-testnet: polygon mumbai
+- testnet: polygon mumbai
+
+some more details need to be further revised
