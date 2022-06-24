@@ -173,6 +173,9 @@ async function connect() {
   }
   //call 
   const bookRental = async function(start, end, id, dayPrice) {
+    const web3Modal = await getWeb3Modal();
+    const provider = await web3Modal.connect();
+    const web3 = new Web3(provider);
     await switchNetwork();
     //when start smaller than end date, add one day to the array
     for(
@@ -182,11 +185,15 @@ async function connect() {
     ) {
       arr.push(new Date(date).toISOString().slice(0,10));//get a yyyy-mm-dd format
     }
+// console.log(dayPrice * arr.length + typeof(dayPrice * arr.length))
+    let options = {
+      value: web3.utils.toWei((dayPrice * arr.length).toString(), 'ether'),
+      from: account
+    }
     //here to provide contract address, abi, and compute price, call addDatesBooked()
-    await contract.methods.addDatesBooked(id, arr).call({ from: account });
+    await contract.methods.addDatesBooked(id, arr).send(options);
 
     //if the above success(onSuccess: () => {}), call handleSuccess(), if not, call handleError(error.data.message)
-
   }
 
   return (
