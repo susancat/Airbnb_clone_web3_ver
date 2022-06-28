@@ -90,7 +90,7 @@ const NavBar = () => {
                 <option value="Taipei">Taipei</option>
                 </Form.Select>
               </Col>
-                   <Col xs={3} className="me-1">
+                   <Col xs={4} className="me-1">
                     <InputGroup size="lg">
                     <InputGroup.Text htmlFor="CheckIn">Check In</InputGroup.Text>
                     <FormControl type="date" id="CheckIn" value={checkIn.toISOString().slice(0, 10)}  
@@ -99,7 +99,7 @@ const NavBar = () => {
                     />
                     </InputGroup>
                    </Col>
-              <Col xs={3} className="me-1">
+              <Col xs={4} className="me-1">
               <InputGroup size="lg">
                     <InputGroup.Text htmlFor="CheckIn">Check Out</InputGroup.Text>
                 <FormControl type="date" id="CheckOut" value={checkOut.toISOString().slice(0, 10)}  

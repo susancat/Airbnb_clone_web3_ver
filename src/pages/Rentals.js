@@ -7,7 +7,8 @@ import logo from '../images/airbnbRed.png';
 import {Button, Row, Col, InputGroup } from "react-bootstrap";
 import {rentalsList} from '../sampleRentalsList';
 import RentalsMap from "../components/RentalsMap";
-import ToastMessage from "../components/Toast";
+import SuccessToast from "../components/SuccessToast";
+import ErrorToast from "../components/ErrorToast";
 // import User from '../components/User';
 
 import Web3 from "web3";
@@ -23,7 +24,9 @@ const Rentals = () => {
   const [coOrdinates, setCoOrdinates] = useState([]);//lat and long
   const [account, setAccount] = useState(null);
   const [contract, setContract] = useState();
-  const [show, setShow] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [errMsg, setErrMsg] = useState();
 
   const contractAddress = '0x9c976cd69e4E914bECf7aED5618680Db090b0264';
 
@@ -42,34 +45,11 @@ useEffect(() => {
   })()
 }, [])
 
-const handleShow = () => setShow(true);
-  // const handleSuccess = () => {
-  //   dispatch({
-  //     type: "success",
-  //     message: `Nice! You are going to ${searchFilters.destination}!!`,
-  //     title: "Booking Successful",
-  //     position:"topL"
-  //   });
-  // };
-
-  // const handleError = (msg) => {
-  //   dispatch({
-  //     type: "error",
-  //     message: `${msg}`,
-  //     title: "Booking Failed",
-  //     position:"topL"
-  //   });
-  // };
-
-  // const handleNoAccount = () => {
-  //   dispatch({
-  //     type: "error",
-  //     message: "You need to connect your wallet to book a rental!",
-  //     title: "Not Connected",
-  //     position:"topL"
-  //   });
-  // };
-
+const handleSuccess = () => setSuccess(true);
+function handleError(error) {
+  setError(true);
+  setErrMsg(error);
+}
   async function getWeb3Modal() {
     const providerOptions = {
       walletconnect: {
@@ -197,9 +177,9 @@ async function connect() {
     //need to check what returns in callback function
     await contract.methods.addDatesBooked(id, arr).send(options, function(error, transactionHash){
       if(transactionHash) {
-        handleShow();
+        handleSuccess();
       } else {
-        console.log(error)
+        handleError(error);
       }
     });
   }
@@ -212,7 +192,6 @@ async function connect() {
             <img src={logo} alt="logo" className="logo" style={{width: "55%", height:"65%"}} />
           </Link>
         </Col>
-
         <Col xs={4}>
           <InputGroup size="lg" className="mt-1">
             <InputGroup.Text>{searchFilters.destination}</InputGroup.Text>
@@ -242,6 +221,8 @@ async function connect() {
         <Col xs={6} style={{height:'85vh', overflowY: 'scroll'}}>
           <Row>
             <h5 className="ms-2 mt-1">Stay Available For Your Destination</h5>
+            <SuccessToast setSuccess={setSuccess} success={success} location={searchFilters.destination} />
+            <ErrorToast setError={setError} error={error} msg={errMsg} />
           </Row>
            
             {result &&
